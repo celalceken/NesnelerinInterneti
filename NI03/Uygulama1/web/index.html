@@ -1,0 +1,184 @@
+<!doctype html>
+<html>
+<head>
+	<title>Arduino PIR and Temperature Sensors</title>
+
+	<meta charset="utf-8">
+	<meta content="width=device-width, initial-scale=1" name="viewport">
+
+	<!--<link href="node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">-->
+
+	<link href="js/bootstrap.min.css" rel="stylesheet">
+
+
+	<script src="node_modules/jquery/dist/jquery.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<!--<script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>-->
+
+	<script src="https://www.gstatic.com/charts/loader.js" type="text/javascript"> </script>
+
+	<script src="/socket.io/socket.io.js"></script>
+	<script>
+		var socket = io();
+		//socket.on('connect', function(){});
+		//socket.on('alldata', function(data){alert(data);});
+		//socket.on('disconnect', function(){});
+
+
+
+		$(document).ready(function(){
+
+			google.charts.load('current', {'packages':['corechart']});
+			google.charts.load('current', {'packages':['gauge']});
+
+
+			// PIR Motion Sensor
+			var x =0;
+
+			google.charts.setOnLoadCallback(drawChartPIR);
+
+			function drawChartPIR() {
+
+				var data = google.visualization.arrayToDataTable([
+					['Task', 'PIR Sensor'],
+					['', x]
+					//['Task', 'PIR', { role: 'style' }, { role: 'annotation' }],
+					//['x', x, 'stroke-color: #703593; stroke-width: 4; fill-color: #C5A5CF', 'Ag']
+
+				]);
+
+				var options = {
+					//title: 'Battery Level'
+					legend: 'Intruder Detection',
+					vAxis: {minValue:0, maxValue:1}
+
+
+				};
+				//var chart = new google.visualization.BarChart(document.getElementById('chartPIR'));
+				var chart = new google.visualization.ColumnChart(document.getElementById('chartPIR'));
+				chart.draw(data, options);
+			}
+
+
+			google.charts.setOnLoadCallback(drawChartTemperature);
+
+
+			var temperature=0;
+			google.charts.setOnLoadCallback(drawChartTemperature);
+			function drawChartTemperature() {
+
+				var data = google.visualization.arrayToDataTable([
+					['Label', 'Value'],
+					['Temperature', temperature]
+				]);
+
+				var options = {
+					width: 400, height: 120,
+					redFrom: 90, redTo: 100,
+					yellowFrom:75, yellowTo: 90,
+					minorTicks: 5
+				};
+
+				var chart = new google.visualization.Gauge(document.getElementById('chartTemperature'));
+
+				chart.draw(data, options);
+
+
+			}
+
+
+
+			socket.on('alldata', function(msg) {
+
+
+				var dataArray = msg.split(':');
+				$('#messages').html($('<li>').text(dataArray[0] + ':' + dataArray[1] ));
+				//$('#messages').html($('<li>').text(msg));
+				var dt = (new Date()).getTime();
+				if (dataArray[0]) {
+					x = parseInt(dataArray[0]);
+					drawChartPIR();
+
+				}
+				if (dataArray[1]) {
+					temperature = parseFloat(dataArray[1]);
+					drawChartTemperature();
+
+				}
+
+			});
+
+		});
+
+	</script>
+
+</head>
+<body>
+<div class="well" >
+
+	<h3 ><a href="http://www.iotlab.sakarya.edu.tr" target="_blank" class="btn btn-success ">IoTRLab</a>
+		<strong >Internet of Things Research Laboratory</strong></a></h3>
+	<h4><strong>Data Visualization for IoT </strong></h4>
+
+</div>
+
+<div class="container">
+
+	<div class="row">
+		<div class="col-md-12">
+			<div class="panel panel-primary ">
+				<div class="panel-heading ">
+					<h3 class="panel-title">Real-Time Sensor Data</h3>
+				</div>
+				<div class="panel-body">
+					<div class="col-md-6 ">
+						<div class="panel panel-default" id="icerik">
+							<div class="panel-heading">PIR Motion Sensor</div>
+							<div class="panel-body">
+								<div class="plot" id="chartPIR" style="height: 300px;"></div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-3 ">
+
+					</div>
+
+					<div class="col-md-3 ">
+						<div class="panel panel-default" id="icerik2">
+							<div class="panel-heading">RTC Temperature
+							</div>
+							<div class="center-block">
+								<div class=" panel-body">
+									<div id="chartTemperature" style="margin-top:90px; margin-bottom:10px; margin-left:40px;  height: 200px;"></div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-12">
+			<div class="panel panel-primary">
+				<div class="panel-heading">
+					<h3 class="panel-title">Real-Time Data</h3>
+				</div>
+				<div class="panel-body">
+					<div id="messages"> Connecting...</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+
+</div>
+
+
+
+</body>
+</html>
