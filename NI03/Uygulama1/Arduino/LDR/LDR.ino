@@ -2,7 +2,7 @@
 
 byte ledPin = 4;    //LED pini.
 int LDRPin = A0;   //LDR giriş pini
-const int eSIKdEGERI=500; 
+const int eSIKdEGERI=400; 
 
 void setup() 
 {
@@ -19,5 +19,5 @@ void loop()
     digitalWrite(ledPin, HIGH);
   else
     digitalWrite(ledPin, LOW);
-  delay(1000);
+  delay(500);
 }

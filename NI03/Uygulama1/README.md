@@ -1,6 +1,6 @@
-This application monitors a PIR motion sensor and a temperature sensor on the Arduino in real-time using Google Charts
+Arduino UNO kullanılarak geliştirilen uygulama, ortamdaki ışık şiddetinin algılanarak NodeJS (oradan da web) ortamına aktarılmasını sağlamaktadır.
 
-Arduino is using USB to be able to communicate with the Raspberry Pi or PC. Run the program using following line
+web klasöründe bulunan Nodejs uygulamasını çalıştırmak için:
 
 > sudo node Server.js
 
