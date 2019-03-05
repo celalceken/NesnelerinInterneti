@@ -1,3 +1,4 @@
-NI03/Uygulama1/.idea
-NI03/Uygulama1/node_modules
+.idea
 node_modules
+*.info
+References
