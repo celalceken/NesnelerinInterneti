@@ -4,17 +4,19 @@
  *
  ***/
 //Dependencies
+
+//Seri port işlemleri için gerekli nesneler oluşturuluyor.
 const SerialPort = require('serialport')
 const Readline = require('@serialport/parser-readline')
-const port = new SerialPort("/dev/tty.usbserial-1410", { baudRate: 115200 })
-//var port = new serialPort("/dev/ttyUSB0", { //Linux sistemlerde
-//var port = new serialPort("COM3", {         //Windows sistemlerde
+const seriPort = new SerialPort("/dev/tty.usbserial-1410", { baudRate: 115200 })
+//var seriPort = new serialPort("/dev/ttyUSB0", { //Linux sistemlerde
+//var seriPort = new serialPort("COM3", {         //Windows sistemlerde
 
-const parser = new Readline() //
+const parser = new Readline() // Seri porttan (newline (\n) alındığı zaman- varsayılan)  gelen veriyi
+//(varsayılan olarak) 'utf8' formatına dönüştürür.
 
-port.pipe(parser)
+seriPort.pipe(parser) //seri porttan gelen veriyi "parser" a yönlendiriyor.
 
 parser.on('data', function (gelenVeri) {
     console.log("Veri:"+ gelenVeri);
-
 })
