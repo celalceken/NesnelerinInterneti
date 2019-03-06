@@ -1,4 +1,6 @@
 .idea
 node_modules
-*.info
+*.info.md
 References
+*.pages
+*.key
