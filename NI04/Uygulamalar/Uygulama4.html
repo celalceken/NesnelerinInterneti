@@ -1,0 +1,75 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+		<title>index2</title>
+		
+		<link rel="stylesheet"  type="text/css" href="Bicim/Bicim.css" />
+
+		<script src="JS/jquery-1.9.1.js"></script>
+
+		<script>
+			$(document).ready(function()
+			{	$("#goster").d	
+				$("#goster").click(function()
+				{
+					$("#solAltForm").slideDown(2000);// "slow", "fast" yada milisaniye
+					$("#sagForm").slideDown("slow");	
+				});
+				$("#gizle").dblclick(function()
+				{	
+					$("#solAltForm").slideUp(2000);// "slow", "fast" yada milisaniye
+					$("#sagForm").slideUp("slow");	
+				});
+				$("#gizleGoster").click(function()
+				{	
+					$("#solAltForm").slideToggle(2000);// "slow", "fast" yada milisaniye
+					$("#sagForm").slideToggle("slow");	
+				});
+				
+				$("#animasyon1").click(function(){
+				    $("#resim1").animate({
+				      marginLeft:'250px',
+				      height:'+=50px',
+				      width:'+=50px'
+				    });
+				 });
+				 $("#animasyon2").click(function(){
+				    var div=$("#sagForm");
+  					div.animate({marginLeft:'600px',height:'300px',opacity:'0.4'},"slow");
+					div.animate({margin-top:'2px',width:'300px',opacity:'0.8'},"slow");
+					div.animate({height:'100px',opacity:'0.4'},"slow");
+					div.delay(1000).animate({width:'100px',opacity:'0.8'},"slow");
+				 });
+				
+			});
+		</script>
+
+	</head>
+
+	<body>
+		
+
+		<a id="goster">Göster||</a> <a id="gizle">Gizle||</a> 
+		<a id="gizleGoster">Gizle/Göster||</a> 
+		<a id="animasyon1">Animasyon1||</a> 
+		<a id="animasyon2">Animasyon2||</a> <br />
+		
+		<img src="Resimler/dc.jpg" id="resim1" 
+			style="margin-left: 400px;margin-top: 200px" />
+		
+		<div id="solAltForm" style="display: none "> 
+			Sol Form <hr />
+			
+			
+			Ad: <input type="text" name="ad"><br>
+			Soyad: <input type="text" name="soyad">
+		
+		</div>
+		<div id="sagForm" style="display: none">Sağ Form</div>
+
+	</body>
+</html>

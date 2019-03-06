@@ -1,0 +1,72 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+		<title>index2</title>
+		
+		<link rel="stylesheet"  type="text/css" href="Bicim/Bicim.css" />
+
+		<script src="JS/jquery-1.9.1.js"></script>
+
+		<script>
+			$(document).ready(function()
+			{
+				$("button").click(function()
+				{
+					$("#resim1").hide();
+				});
+			
+				$("#resimGoster").mouseenter(function()
+				{
+					$("#resim1").show();
+					$(".grup1").hide();
+				});
+			
+				$("#resimGizleGoster").hover(
+					function()
+					{	$("#resim1").show();},
+					function()
+					{	$("#resim1").hide();
+				});
+			
+				$("input").focus(function(){
+				    $(this).css("background-color","#cccccc");
+				});
+				
+				$("input").blur(function(){
+				    $(this).css("background-color","#ffffff");
+				});
+				
+				$("input").change(function(){
+				  alert("Metin kutusunun değeri değişti...");
+				});
+			
+			});
+		</script>
+
+	</head>
+
+	<body>
+		<h1 class="grup1">Başlık 1</h1>	
+		<hr/>
+		<p class="grup1">Birinci paragraf	</p>
+		<button>Gizle</button>
+		<a id="resimGoster">||Göster||</a> <a id="resimGizleGoster">GizleGöster</a>
+		
+		<img src="Resimler/dc.jpg" id="resim1" style="margin-left:900px; margin-top: 400px"; />
+		
+		<div id="solAltForm"> 
+			Sol Form <hr />
+			
+			
+			Ad: <input type="text" name="ad"><br>
+			Soyad: <input type="text" name="soyad">
+		
+		</div>
+		<div id="sagForm">Sağ Form</div>
+
+	</body>
+</html>
