@@ -1,6 +1,6 @@
 Arduino UNO kullanılarak geliştirilen uygulama, ortamdaki ışık şiddetinin algılanarak NodeJS ortamına, ardından istemcilere (web tarayıcılarına) aktarılmasını sağlamaktadır.
 
-###Uygulamanın çalıştırılması için
+### Uygulamanın çalıştırılması için
 
 1. /Arduino/LDR/LDR.ino dosyası, Arduino geliştirme ortamı (bilgisayara kurmanız gereklidir) kullanılarak Arduino UNO cihaza aktarılmalıdır.
 2. /Arduino/LDR.fzz içerisinde yer alan devre kurulmalıdır. (Devrenin PCB tasarımı için Fritzing yazılımı kurulmalıdır.)
@@ -18,7 +18,7 @@ Uygulamanın çalıştırıldığı node ve npm sürümleri:
 NodeJS: v10.14.2
 npm: 6.5.0
 
-###Ek Kaynaklar
+### Ek Kaynaklar
 
 1. HTML (İstemci Tarafı) konusunda ayrıntılı bilgi için <https://www.w3schools.com/html/default.asp>
 
