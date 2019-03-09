@@ -17,6 +17,7 @@ Arduino UNO kullanılarak geliştirilen uygulama, ortamdaki ışık şiddetinin 
     yaparak uygulamayı her değişiklikte yeniden çalıştırınız ve sonuçları web tarayıcınızda  gözlemleyiniz. 
 
 Uygulamanın çalıştırıldığı node ve npm sürümleri:
+
 NodeJS: v10.14.2
 npm: 6.5.0
 
