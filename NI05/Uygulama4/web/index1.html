@@ -1,0 +1,70 @@
+<!doctype html>
+<html>
+<head>
+	<title>Arduino LDR</title>
+
+	<meta charset="utf-8">
+	<meta content="width=device-width, initial-scale=1" name="viewport">
+
+	<!--<link href="node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">-->
+
+	<link href="js/bootstrap.min.css" rel="stylesheet">
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/10.6.1/css/bootstrap-slider.min.css" rel="stylesheet">
+
+	<style>
+
+		#ex1Slider .slider-selection {
+			background: #BABABA;
+		}
+	</style>
+
+	<script src="node_modules/jquery/dist/jquery.js"></script>
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/10.6.1/bootstrap-slider.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<!--<script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>-->
+
+
+	<script src="/socket.io/socket.io.js"></script>
+	<script>
+		$(document).ready(function(){
+			const socket = io();
+			socket.on('sunucudan', function(sunucudanGelenVeri) {
+				$('#gelenVeriElementi').html(sunucudanGelenVeri);
+			});
+
+
+
+			$('#ex1').slider().on("slideStop", function(ev){
+				var donmeAcisi = $('#ex1').data('slider').getValue();
+				//alert(donmeAcisi);
+				socket.emit('istemciden',donmeAcisi);
+
+			});
+
+
+
+		});
+
+	</script>
+
+</head>
+<body>
+
+<div class="well" >
+
+	<h3 ><a href="http://www.iotlab.sakarya.edu.tr" target="_blank" class="btn btn-success ">IoTRLab</a>
+		<strong >Internet of Things Research Laboratory</strong></a></h3>
+	<h4><strong>Data Visualization for IoT </strong></h4>
+
+</div>
+
+<div class="container">
+
+	<input id="ex1" data-slider-id='ex1Slider' type="text" data-slider-min="0" data-slider-max="180" data-slider-step="1" data-slider-value="0"/>
+
+</div>
+
+
+</body>
+</html>
