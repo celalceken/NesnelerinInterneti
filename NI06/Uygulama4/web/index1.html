@@ -1,0 +1,98 @@
+<!doctype html>
+<html>
+<head>
+	<title>Arduino Bariyer Kontrol Sistemi</title>
+
+	<meta charset="utf-8">
+	<meta content="width=device-width, initial-scale=1" name="viewport">
+
+	<!--<link href="node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">-->
+
+	<link href="js/bootstrap.min.css" rel="stylesheet">
+
+	<link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
+
+
+
+	<script src="node_modules/jquery/dist/jquery.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+
+	<script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+
+
+	<script src="/socket.io/socket.io.js"></script>
+	<script>
+		$(document).ready(function(){
+			const socket = io();
+
+
+
+			socket.on('SunucudanIstemcilere', function(sunucudanGelenVeri) {
+				$('#gelenVeriElementi').html(sunucudanGelenVeri);
+				$('#progressBar').css("width",parseInt(sunucudanGelenVeri)+"%");
+
+				if(parseInt(sunucudanGelenVeri)<40) {
+					socket.emit('IstemcidenSunucuya', 80); //Bariyeri aç
+					$('#progressBar').css("background-color", "red");
+					setTimeout(function () { // bir süre sonra bariyeri kapa
+						socket.emit('IstemcidenSunucuya', 0); //Bariyeri kapa
+					},3000);
+
+				}
+				/*else {
+					$('#progressBar').css("background-color", "blue");
+					socket.emit('IstemcidenSunucuya', 0); //Bariyeri kapa
+				}*/
+			});
+
+
+			$('#toggle-event').change(function() {
+				$('#console-event').html('Toggle: ' + $(this).prop('checked'))
+				if($(this).prop('checked'))
+					socket.emit('IstemcidenSunucuya',80); //Bariyeri aç
+				else
+					socket.emit('IstemcidenSunucuya',0); ////Bariyeri kapa
+			})
+
+		});
+
+	</script>
+
+</head>
+<body>
+
+<div class="well" >
+
+	<h3 ><a href="http://www.iotlab.sakarya.edu.tr" target="_blank" class="btn btn-success ">IoTRLab</a>
+		<strong >Internet of Things Research Laboratory</strong></a></h3>
+	<h4><strong>Data Visualization for IoT </strong></h4>
+
+</div>
+
+<div class="container">
+	<div class="row">
+		<div class="col-md-4"></div>
+		<div class="col-md-4 text-center">
+
+			<h1 class="display-1">Bariyer</h1>
+			<input id="toggle-event" type="checkbox" checked data-toggle="toggle" data-width="100" data-height="75" data-on="Açık" data-off="Kapalı">
+			<div id="console-event">aaa</div>
+
+		</div>
+		<div class="col-md-4"></div>
+
+	</div>
+
+	<div class="progress">
+		<div id="progressBar" class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="400" style="width:80%">
+
+		</div>
+	</div>
+
+
+
+</div>
+
+
+</body>
+</html>
