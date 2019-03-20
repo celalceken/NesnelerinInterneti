@@ -23,9 +23,9 @@
 			const socket = io();
 			socket.on('alldata', function(sunucudanGelenVeri) {
 				$('#gelenVeriElementi').html(sunucudanGelenVeri);
-				$('#progressBar').css("width",sunucudanGelenVeri/10+"%");
+				$('#progressBar').css("width",sunucudanGelenVeri/1+"%");
 
-				if(parseInt(sunucudanGelenVeri)<400)
+				if(parseInt(sunucudanGelenVeri)<90)
 					$('#progressBar').css("background-color","red");
 				else
 					$('#progressBar').css("background-color","blue");
@@ -46,12 +46,12 @@
 </div>
 
 <div class="container">
-	<h1 class="display-1 text-center">Ölçülen Işık Şiddeti</h1>
+	<h1 class="display-1 text-center">Potansiyometre Değeri</h1>
 	<h1 id="gelenVeriElementi"class="display-1 text-center"></h1>
 
 	<div class="progress">
-		<div id="progressBar" class="progress-bar" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" style="width:80%">
-			<span class="sr-only">70% Complete</span>
+		<div id="progressBar" class="progress-bar" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="180" style="width:80%">
+
 		</div>
 	</div>
 

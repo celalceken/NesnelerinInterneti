@@ -16,14 +16,14 @@ const path = require('path');
 //Seri port işlemleri için gerekli nesneler oluşturuluyor.
 const SerialPort = require('serialport')
 const Readline = require('@serialport/parser-readline')
-const seriPort = new SerialPort("/dev/tty.usbserial-1420", { baudRate: 115200 })
+const seriPort = new SerialPort("/dev/tty.usbserial-1410", { baudRate: 115200 })
 const parser = new Readline()
 
 //uygulama sunucusunun dinamik olarak oluşturması gerekmeyen statik içerikler
 app.use('/node_modules', express.static(path.join(__dirname, 'node_modules')))
 app.use('/js', express.static(path.join(__dirname, 'js')))
 
-// index.html dosyası istemcilere gönderiliyor...
+// indexY.html dosyası istemcilere gönderiliyor...
 app.get('/', function(req, res){
     res.sendFile(__dirname + '/index2.html');
 });
