@@ -28,7 +28,7 @@
 
 
 			socket.on('SunucudanIstemcilere', function(sunucudanGelenVeri) {
-				$('#gelenVeriElementi').html(sunucudanGelenVeri);
+
 				$('#progressBar').css("width",parseInt(sunucudanGelenVeri)+"%");
 
 				if(parseInt(sunucudanGelenVeri)<40) {
@@ -50,7 +50,7 @@
 
 
 			$('#toggle-event').change(function() {
-				$('#console-event').html('Toggle: ' + $(this).prop('checked'))
+
 				if($(this).prop('checked'))
 					socket.emit('IstemcidenSunucuya',80); //Bariyeri aç
 				else

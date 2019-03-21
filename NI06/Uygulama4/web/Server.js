@@ -16,7 +16,7 @@ const path = require('path');
 //Seri port işlemleri için gerekli nesneler oluşturuluyor.
 const SerialPort = require('serialport')
 const Readline = require('@serialport/parser-readline')
-const seriPort = new SerialPort("/dev/tty.usbserial-1420", { baudRate: 115200 })
+const seriPort = new SerialPort("/dev/tty.usbserial-1410", { baudRate: 115200 })
 const parser = new Readline()
 
 //uygulama sunucusunun dinamik olarak oluşturması gerekmeyen statik içerikler

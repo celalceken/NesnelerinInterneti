@@ -1,34 +1,52 @@
 /*
- Controlling a servo position using a potentiometer (variable resistor)
- by Michal Rinott <http://people.interaction-ivrea.it/m.rinott>
+Ultrasonik Mesafe Sensörü (HC-SR04)
+ ile Servo Motor Kontrolü
 
- modified on 8 Nov 2013
- by Scott Fitzgerald
- http://www.arduino.cc/en/Tutorial/Knob
 */
 
 #include <Servo.h>
 
 Servo myservo;  // create servo object to control a servo
 
-int potpin = 0;  // analog pin used to connect the potentiometer
+const int trigPin = 9;
+const int echoPin = 10;
+
+// defines variables
+long duration;
+int distance;
 int val;    // variable to read the value from the analog pin
 
 void setup() {
-  myservo.attach(9);  // attaches the servo on pin 9 to the servo object
+  pinMode(trigPin, OUTPUT); // Sets the trigPin as an Output
+  pinMode(echoPin, INPUT); // Sets the echoPin as an Input
+  myservo.attach(8);  // attaches the servo on pin 8 to the servo object
   Serial.begin(115200);
-  val=0;
 }
 
 void loop() {
 
-  // send data only when you receive data:
+    // Clears the trigPin
+  digitalWrite(trigPin, LOW);
+  delayMicroseconds(2);
+  // Sets the trigPin on HIGH state for 10 micro seconds
+  digitalWrite(trigPin, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(trigPin, LOW);
+  // Reads the echoPin, returns the sound wave travel time in microseconds
+  duration = pulseIn(echoPin, HIGH);
+  // Calculating the distance
+  distance= duration*0.034/2; //cm 
+  // Prints the distance on the Serial Monitor
+  //Serial.print("Distance (cm):");
+  Serial.println(distance); //Ölçülen mesafe web ortamındaki denetleyiciye gönderiliyor
+  delay(60); 
+
   if (Serial.available() ) 
   {
-    // read the incoming byte:
+    // Web ortamındaki denetleyiciden gelen işaret alınıyor
     val = Serial.parseInt();                
     myservo.write(val);                  // sets the servo position according to the scaled value
-    //Serial.println(val);
   }
-  delay(1);                           // waits for the servo to get there
+  
+                         
 }

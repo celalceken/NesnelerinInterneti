@@ -25,18 +25,18 @@ const parser = new Readline()
 //Veritabanı Sunucu (Mongodb) işlemleri
 
 const url = 'localhost:27017/GuvenlikSistemi'; // Connection URL
-//const url = "mongodb://Lecture:Lecture1@ds119572.mlab.com:19572/ogrencibilgisistemi"
+//const url = "mongodb://LectureUser:LecturePassword1@ds119606.mlab.com:19606/iot"
 const db = require('monk')(url);
-const collection = db.get('bariyer');
-/*
-collection.insert([{a: 1}, {a: 2}, {a: 3}])
+const collection = db.get('BariyerSistemi');
+
+/*collection.insert({"Zaman": dateFormat(Date.now(), "dd.mm.yyyy-hh:MM:ss TT"),"bariyerDurumu": 80})
     .then((docs) => { console.log("basarili");
         // docs contains the documents inserted with added **_id** fields
         // Inserted 3 documents into the document collection
     }).catch((err) => { console.log(err);
     // An error happened while inserting
-}).then(() => db.close())
-*/
+}).then(() => db.close())*/
+
 
 
 
@@ -73,9 +73,9 @@ parser.on('data', function (gelenVeri) {
 
 io.on('connection', function (socket) {
     socket.on('IstemcidenSunucuya', function (data) {
-        console.log(data);
+        //console.log(data);
         seriPort.write(data.toString());
-        console.log(dateFormat(Date.now(), "dd.mm.yyyy-hh:MM:ss TT"));
+        //console.log(dateFormat(Date.now(), "dd.mm.yyyy-hh:MM:ss TT"));
         //Veritabanına da yaz
         collection.insert({"Zaman": dateFormat(Date.now(), "dd.mm.yyyy-hh:MM:ss TT"),"bariyerDurumu": data}).then((docs) => {
             }).catch((err) => {

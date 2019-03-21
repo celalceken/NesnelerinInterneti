@@ -8,7 +8,6 @@ Ultrasonik Mesafe Sensörü (HC-SR04)
 
 Servo myservo;  // create servo object to control a servo
 
-int potpin = 0;  // analog pin used to connect the potentiometer
 const int trigPin = 9;
 const int echoPin = 10;
 const int eSIKdEGERI=300; 
@@ -48,7 +47,7 @@ void loop() {
 
     myservo.write(80);  //Bariyer aç  
     Serial.println(80);              
-    delay(2000);   
+    delay(3000);   
     myservo.write(0); // Bariyer kapa
     Serial.println(0); 
     
