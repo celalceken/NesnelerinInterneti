@@ -1,0 +1,159 @@
+<!--// https://nagix.github.io/chartjs-plugin-streaming/samples/-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sayfa Başlığı</title>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script>
+    <script src="https://github.com/nagix/chartjs-plugin-streaming/releases/download/v1.7.1/chartjs-plugin-streaming.min.js"></script>
+
+    <link href="js/bootstrap.min.css" rel="stylesheet">
+
+
+    <script src="node_modules/jquery/dist/jquery.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <!--<script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>-->
+
+    <script src="/socket.io/socket.io.js"></script>
+
+
+    <script>
+        $(document).ready(function(){
+
+            const socket = io();
+            socket.on('SunucudanIstemcilere', function(sunucudanGelenVeri) {
+                $('#gelenVeriElementi').html(sunucudanGelenVeri);
+                $('#progressBar').css("width",sunucudanGelenVeri/10+"%");
+
+                if(parseInt(sunucudanGelenVeri)<400)
+                    $('#progressBar').css("background-color","red");
+                else
+                    $('#progressBar').css("background-color","blue");
+            });
+
+
+            var color = Chart.helpers.color;
+
+            var chartColors = {
+                red: 'rgb(255, 99, 132)',
+                orange: 'rgb(255, 159, 64)',
+                yellow: 'rgb(255, 205, 86)',
+                green: 'rgb(75, 192, 192)',
+                blue: 'rgb(54, 162, 235)',
+                purple: 'rgb(153, 102, 255)',
+                grey: 'rgb(201, 203, 207)'
+            };
+
+
+            function onRefresh(chart,sunucudanGelenVeri) {
+                chart.config.data.datasets.forEach(function(dataset) {
+                    dataset.data.push({
+                        x: Date.now(),
+                        y: sunucudanGelenVeri
+                    });
+                });
+            }
+
+            var config = {
+                type: 'line',
+                data: {
+                    datasets: [/*{
+                        label: 'Dataset 1 (linear interpolation)',
+                        backgroundColor: color(chartColors.red).alpha(0.5).rgbString(),
+                        borderColor: chartColors.red,
+                        fill: false,
+                        lineTension: 0,
+                        borderDash: [8, 4],
+                        data: []
+                    }, */{
+                        label: 'Nesnenin Uzaklığı(cm)',
+                        backgroundColor: color(chartColors.blue).alpha(0.5).rgbString(),
+                        borderColor: chartColors.blue,
+                        fill: 'origin',
+                        cubicInterpolationMode: 'monotone',
+                        data: []
+                    }
+                    ]
+                },
+                options: {
+                    title: {
+                        display: true,
+                        text: 'Ultrasonik Mesafe Sensöründen Alınan Gerçek Zamanlı Veri'
+                    },
+                    scales: {
+                        xAxes: [{
+                            type: 'realtime',
+                            realtime: {
+                                duration: 20000,
+                                refresh: 90000, //Bu değer çok önemli
+                                delay: 1000,
+                                onRefresh: onRefresh
+                            }
+                        }],
+                        yAxes: [{
+                            scaleLabel: {
+                                display: true,
+                                labelString: 'mesafe(cm)'
+                            }
+                        }]
+                    },
+                    tooltips: {
+                        mode: 'nearest',
+                        intersect: false
+                    },
+                    hover: {
+                        mode: 'nearest',
+                        intersect: false
+                    }
+                }
+            };
+
+
+            var ctx = document.getElementById('myChart').getContext('2d');
+            window.myChart = new Chart(ctx, config);
+
+
+            var colorNames = Object.keys(chartColors);
+
+
+            socket.on('SunucudanIstemcilere', function(sunucudanGelenVeri) {
+                onRefresh(window.myChart,sunucudanGelenVeri);
+                window.myChart.update();
+            });
+        });
+
+    </script>
+</head>
+<body>
+
+<div>
+    <canvas id="myChart"></canvas>
+</div>
+
+<div class="container">
+    <h1 class="display-1 text-center">Ölçülen Işık Şiddeti</h1>
+    <h1 id="gelenVeriElementi"class="display-1 text-center"></h1>
+
+    <div class="progress">
+        <div id="progressBar" class="progress-bar" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" style="width:80%">
+        </div>
+    </div>
+
+</div>
+
+<button id="addData">Add Data</button>
+
+
+
+
+
+</body>
+
+
+
+
+</html>

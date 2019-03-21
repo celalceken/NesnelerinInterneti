@@ -12,7 +12,7 @@ Deney ile ilgili ayrıntılara <https://howtomechatronics.com/tutorials/arduino/
 4. Projenin NodeJS/web tarafının geliştirilmesi için webstorm geliştirme ortamı kurulabilir.
 5. İlgili uygulamaların web tarafı için /web klasöründe yer alan Server.js dosyası çalıştırılmalıdır.
 
-Uygulamanın çalıştırıldığı node ve npm sürümleri:
+Uygulamalarnın çalıştırıldığı node ve npm sürümleri:
 
 NodeJS: v10.14.2
 npm: 6.5.0
