@@ -53,7 +53,8 @@ parser.on('data', function (gelenVeri) {
     console.log("UID:"+ gelenVeri); // USB portundan gelen veriyi çıkış konsoluna yazdır
 
     //Okuma zamanını ve okunan UID değerini veritabanına kaydet.
-    collection1.insert({"Zaman": dateFormat(Date.now(), "dd.mm.yyyy-hh:MM:ss TT"),"RFIDUID": gelenVeri.trim()}).then((docs) => {
+    collection1.insert({"Zaman": dateFormat(Date.now(), "dd.mm.yyyy-hh:MM:ss TT"),"RFIDUID": gelenVeri.trim()}).
+    then((docs) => {
     }).catch((err) => {
         // An error happened while inserting
     }).then(() => db.close())
