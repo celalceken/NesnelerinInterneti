@@ -45,5 +45,5 @@ void loop()
       myservo.write(0);                       
   }
 
-  delay(600); 
+  delay(7000); 
 }

@@ -14,27 +14,30 @@ const mqttParameters = require('./info');
 var client = mqtt.connect(mqttParameters.brokerURL,{
     port: mqttParameters.port,
     username: mqttParameters.username,
-    password: mqttParameters.password
+    password: mqttParameters.password,
+    rejectUnauthorized: false
+
 });
 
 
 
 //Seri port işlemleri için gerekli nesneler oluşturuluyor.
 const Readline = require('@serialport/parser-readline')
-const seriPort = new SerialPort("/dev/tty.usbserial-1420", { baudRate: 115200 })
+const seriPort = new SerialPort("/dev/tty.usbserial-1410", { baudRate: 115200 })
 const parser = new Readline()
 
 seriPort.pipe(parser)
 
 parser.on('data', function (gelenVeri) {
+    //console.log(gelenVeri);
     var array = gelenVeri.split(":");
     console.log(array[0]);
     console.log(array[1]);
     console.log(array[2]);
 
-    //client.publish(mqttParameters.topic1, array[0]);
-   // client.publish(mqttParameters.topic2, array[1]);
-   // client.publish(mqttParameters.topic3, array[2]);
+    client.publish(mqttParameters.topic1, array[0]);
+    client.publish(mqttParameters.topic2, array[1]);
+    client.publish(mqttParameters.topic3, array[2]);
 
 
 })
