@@ -2,7 +2,7 @@
 mqttParameters={
 
     username: 'iotrlab',
-    password: '2dacf1cc0c014c4b9ae32f0fcc32ff9e',
+    password: '632feaa3fb094edea388dd45e4acf6e8',
     topic1 : 'iotrlab/feeds/nem',
     topic2 : 'iotrlab/feeds/sicaklik',
     topic3 : 'iotrlab/feeds/LDR',
