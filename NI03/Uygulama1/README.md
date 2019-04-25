@@ -16,3 +16,19 @@ Uygulamanın çalıştırıldığı node ve npm sürümleri:
 NodeJS: v10.14.2
 npm: 6.5.0
 
+### Ek Kaynaklar
+
+* Arduino Uno bord Genel Bilgi:
+* * https://www.arduino.cc/en/Guide/Introduction
+* * https://maker.robotistan.com/arduino-uno/ 
+* Uygulama Geliştirme Ortamı (IDE):
+* * https://www.arduino.cc/en/Guide/Environment
+* Arduino Programlama Dili: https://www.arduino.cc/reference/en/
+* Arduino Bordlar: 
+* *https://www.arduino.cc/en/main/boards
+* *https://maker.robotistan.com/arduino-yazilim-kurulum/) 2. LDR (Işık Algılayıcısı)
+* * https://www.mcufreak.com/ldr-nedir-nasil-kullanilir/
+* NodeJS (Arduino UNO bordunun web ortamıyla etkileşimini sağlamak için kullanılır)
+* * https://nodejs.org/en/ 
+* Fritzing (PCB tasarımları için kullanılır)
+* * http://fritzing.org
