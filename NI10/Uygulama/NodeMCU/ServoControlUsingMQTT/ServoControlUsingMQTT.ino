@@ -34,7 +34,6 @@ Servo myservo;
 #define AIO_USERNAME    "iotrlab"
 #define AIO_KEY         "632feaa3fb094edea388dd45e4acf6e8"
 
-//#define ledPin  13 // GPIO13 -> D7
 
 /************ Global State (you don't need to change this!) ******************/
 
@@ -49,7 +48,7 @@ Adafruit_MQTT_Client mqtt(&client, AIO_SERVER, AIO_SERVERPORT, AIO_USERNAME, AIO
 /****************************** Feeds ***************************************/
 
 
-Adafruit_MQTT_Publish photocell = Adafruit_MQTT_Publish(&mqtt, AIO_USERNAME "/feeds/nem");
+//Adafruit_MQTT_Publish photocell = Adafruit_MQTT_Publish(&mqtt, AIO_USERNAME "/feeds/nem");
 
 // Setup a feed called 'onoff' for subscribing to changes.
 Adafruit_MQTT_Subscribe onoffbutton = Adafruit_MQTT_Subscribe(&mqtt, AIO_USERNAME "/feeds/servo");
@@ -104,39 +103,28 @@ void loop() {
     if (subscription == &onoffbutton) {
       Serial.print(F("Got: "));
       Serial.println((char *)onoffbutton.lastread);
-      buton = atoi((char *)onoffbutton.lastread);
-      Serial.println(buton);
-      //x+=10;
-      if(buton==1)
-      {
+      if (strcmp((char *)onoffbutton.lastread, "ON") == 0) {
         myservo.write(90); 
-        digitalWrite(D6, HIGH);      
+        digitalWrite(D6, HIGH);   
       }
-      else 
-      {
+      if (strcmp((char *)onoffbutton.lastread, "OFF") == 0) {
         myservo.write(0); 
-        digitalWrite(D6, LOW);
+        digitalWrite(D6, LOW);   
       }
       
-      
-      /*if(ledBrightValue==1)
-        digitalWrite(D6, HIGH);
-      else
-        digitalWrite(D6, LOW);*/
-
       delay(100);
     }
   }
 
   // Now we can publish stuff!
-  Serial.print(F("\nSending photocell val "));
+  /*Serial.print(F("\nSending photocell val "));
   Serial.print(x);
   Serial.print("...");
   if (! photocell.publish(x++)) {
     Serial.println(F("Failed"));
   } else {
     Serial.println(F("OK!"));
-  }
+  }*/
 
 }
 

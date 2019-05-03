@@ -6,8 +6,10 @@
   "description": "Arduino PIR and Temperature Sensors",
   "main": "Server.js",
   "dependencies": {
-    "serialport": "^7.1.4",
-    "mqtt": "^2.18.8"
+    "dateformat": "^3.0.3",
+    "monk": "^6.0.6",
+    "mqtt": "^2.18.8",
+    "serialport": "^7.1.4"
   },
   "scripts": {
     "start": "node Server.js"

@@ -21,8 +21,8 @@
 
 /************************* WiFi Access Point *********************************/
 
-#define WLAN_SSID  "AirTies001"  //    "OMF"
-#define WLAN_PASS   "Evdek1Modem1nS1fres1" //    "12345678"
+#define WLAN_SSID  "OMF"
+#define WLAN_PASS   "12345678"
 
 /************************* Adafruit.io Setup *********************************/
 

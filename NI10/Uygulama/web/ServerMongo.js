@@ -1,70 +1,60 @@
 /***
- *  Radyo frekanslı tanılama (Radio frequency Identification - RFID) RC522
- * RFID etiketine ait UID değerinin usb portundan alınarak
- * istemcilere (web tarayıcıya) gönderilmesi sağlanıyor, Okunan RFID etiketi UID değeri ve okuma zamanı
- * MongoDB veritabanına kaydediliyor. Okunan UID değerine ait kullanıcı bilgileri veritabanından alınarak web tarayıcıda
- * yazdırılıyor.
- *
+ *  MQTT sunucudan gelen LDR ve servo motor kontrol verileri
+ * MongoDB veritabanına kaydediliyor.
  ***/
 
 //Kullanılan kütüphaneler tanımlanıyor
 
-const express = require('express'); ////Node.js web uygulama çatısı. Web uygulamaları geliştirmek için kullanılır.
-const app= express();
-const http = require('http').Server(app);
-const io = require('socket.io')(http); //Sunucu ile istemciler arasında anlık haberleşme için (web soketi)
-const path = require('path');
-const dateFormat = require('dateformat');
+const mqtt = require('mqtt');
+const mqttParameters = require('./info');
 
-//Seri port işlemleri için gerekli nesneler oluşturuluyor.
-const SerialPort = require('serialport')
-const Readline = require('@serialport/parser-readline')
-const seriPort = new SerialPort("/dev/tty.usbserial-1410", { baudRate: 115200 })
-const parser = new Readline()
+//mqtt sunucuya bağlanılıyor
+var client = mqtt.connect(mqttParameters.brokerURL,{
+    port: mqttParameters.port,
+    username: mqttParameters.username,
+    password: mqttParameters.password,
+    rejectUnauthorized: false
+
+});
 
 //Veritabanı Sunucu (Mongodb) işlemleri
-const url = 'localhost:27017/GuvenlikSistemi'; // Connection URL
-//const url = "mongodb://LectureUser:LecturePassword1@ds119606.mlab.com:19606/iot"
+//const url = 'localhost:27017/GuvenlikSistemi'; // Connection URL
+const url = "mongodb://LectureUser:LecturePassword1@ds119606.mlab.com:19606/iot"
 const db = require('monk')(url);
-const collection1 = db.get('RFIDLoglari');
-const collection2 = db.get('Kullanicilar');
+const collection1 = db.get('LDR');
+const collection2 = db.get('ServoMotorKontrol');
+
+const dateFormat = require('dateformat');
 
 
-//uygulama sunucusunun dinamik olarak oluşturması gerekmeyen statik içerikler
-app.use('/node_modules', express.static(path.join(__dirname, 'node_modules')))
-app.use('/js', express.static(path.join(__dirname, 'js')))
-
-// index.html dosyası istemcilere gönderiliyor...
-app.get('/', function(req, res){
-    res.sendFile(__dirname + '/indexMongo1.html');
+client.on('connect', () => {
+    client.subscribe(mqttParameters.topics);
 });
 
+// Uzaktan gelen mesajı al
 
-// Web sunucu başlatılıyor
+client.on('message', function (topic, message) {
 
-const webSunucuPortAdresi=8080;
-http.listen(webSunucuPortAdresi, function(){
-    console.log(webSunucuPortAdresi+': adresine istek gelmesi bekleniyor ');
+    if (topic === 'iotrlab/feeds/LDR') {
+        //console.log('LDR:'+message.toString());
+        //Ölçüm zamanını ve ölçülen LDR değerini veritabanına kaydet.
+        collection1.insert({"Zaman": dateFormat(Date.now(), "dd.mm.yyyy-hh:MM:ss TT"),"LDR": message.toString().trim()}).
+        then((docs) => {
+        }).catch((err) => {
+            // An error happened while inserting
+        }).then(() => db.close())
+    }
+    if (topic === 'iotrlab/feeds/servo') {
+        //console.log('servo:'+message.toString());
+
+        //Zamanı ve Servo Motor Kontrol verisini  veritabanına kaydet.
+
+        collection2.insert({"Zaman": dateFormat(Date.now(), "dd.mm.yyyy-hh:MM:ss TT"),"ServoHareket": message.toString()}).
+        then((docs) => {
+        }).catch((err) => {
+            // An error happened while inserting
+        }).then(() => db.close())
+    }
+
 });
 
-seriPort.pipe(parser)
-
-parser.on('data', function (gelenVeri) {
-    console.log("UID:"+ gelenVeri); // USB portundan gelen veriyi çıkış konsoluna yazdır
-
-    //Okuma zamanını ve okunan UID değerini veritabanına kaydet.
-    collection1.insert({"Zaman": dateFormat(Date.now(), "dd.mm.yyyy-hh:MM:ss TT"),"RFIDUID": gelenVeri.trim()}).
-    then((docs) => {
-    }).catch((err) => {
-        // An error happened while inserting
-    }).then(() => db.close())
-
-    // Okunan UID değerine ait kullanıcı bilgileri veritabanından al ve web tarayıcıya soket üzerinden gönder.
-    collection2.find({"RFIDEtiket":gelenVeri.trim()}).then((docs) => {
-
-        console.log(docs);
-        console.log(docs[0].adiSoyadi);
-        io.emit('SunucudanIstemcilere',docs[0].adiSoyadi);
-
-    })
-})

@@ -15,8 +15,11 @@ Arduino cihaza bağlı LDR (ışık şiddeti), sıcaklık ve nem oranı verileri
 NodeJS ve MQTT yardımıyla bulut ortamına aktarılması ve Nesnelerin İnterneti Bulut hizmeti sağlayıcılarından 
 biri olan Adafruit <https://io.adafruit.com> üzerinde oluşturulan kontrol panelinde görüntülenmesi sağlanmaktadır.
 Oluşturulan kontrol paneli üzerinde yer alan buton ile, NodeMCU platformuna bağlı olan servo motorun 
-kontrol edilmesi de sağlanmaktadır. Uygulamada, Servo motorun kontrolü için ayrıca Arduino cihazdaki LDR değeri 
-kontrol edilmekte ve MQTT ile uygun kontrol işareti göndrilmektedir.
+kontrol edilmesi de sağlanmaktadır. Uygulamada, Servo motorun kontrolü için Arduino cihazdaki LDR değeri 
+kontrol edilmekte ve MQTT ile uygun kontrol işareti gönderilmektedir. NodeJS ile geliştirilen bir diğer diğer 
+uygulama/servis () içerisinde LDR ve 
+Servo Motor Kontrol verilerinin MQTT yardımıyla MongoDB de oluşturulan veritabanına kaydedilmesi sağlanmaktadır.
+MongoDB için hem yerel hem de uzak sunucu (mlab) oluşturulmuştur. 
 
 
 * Ayrıntılı bilgi için:

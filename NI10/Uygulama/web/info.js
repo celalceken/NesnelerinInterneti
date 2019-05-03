@@ -6,7 +6,8 @@ mqttParameters={
     topic1 : 'iotrlab/feeds/nem',
     topic2 : 'iotrlab/feeds/sicaklik',
     topic3 : 'iotrlab/feeds/LDR',
-    topic4 : 'iotrlab/feeds/LED',
+    topic4 : 'iotrlab/feeds/servo',
+    topics : 'iotrlab/feeds/+',
 
     //brokerURL: 'mqtt://localhost',  //local: 'mqtt://localhost' -----  cloud: 'mqtts://io.adafruit.com'
     brokerURL: 'mqtts://io.adafruit.com',

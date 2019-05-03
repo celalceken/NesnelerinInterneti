@@ -29,15 +29,21 @@ const parser = new Readline()
 seriPort.pipe(parser)
 
 parser.on('data', function (gelenVeri) {
-    //console.log(gelenVeri);
+    console.log(gelenVeri);
     var array = gelenVeri.split(":");
-    console.log(array[0]);
-    console.log(array[1]);
-    console.log(array[2]);
+    console.log(array[0]); //nem oranı
+    console.log(array[1]); //sicaklık
+    console.log(array[2]); //LDR
 
-    client.publish(mqttParameters.topic1, array[0]);
-    client.publish(mqttParameters.topic2, array[1]);
+    //client.publish(mqttParameters.topic1, array[0]);
+    //client.publish(mqttParameters.topic2, array[1]);
     client.publish(mqttParameters.topic3, array[2]);
+
+    var ldr=parseInt(array[2]);
+    if (ldr<400)
+        client.publish(mqttParameters.topic4, "ON");
+    else
+        client.publish(mqttParameters.topic4, "OFF");
 
 
 })
@@ -48,6 +54,7 @@ client.on('connect', () => {
 });
 
 // Uzaktan gelen mesajı al
+/*
 client.on('message', function (topic4, message) {
     console.log(message.toString());
     if(message.toString().trim()=='On')
@@ -55,5 +62,6 @@ client.on('message', function (topic4, message) {
     else
         seriPort.write('0');
 });
+*/
 
 //seriPort.write(data.toString());
