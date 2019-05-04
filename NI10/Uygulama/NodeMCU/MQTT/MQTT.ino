@@ -21,7 +21,7 @@
 
 /************************* WiFi Access Point *********************************/
 
-#define WLAN_SSID  "OMF"
+#define WLAN_SSID   "OMF"
 #define WLAN_PASS   "12345678"
 
 /************************* Adafruit.io Setup *********************************/
